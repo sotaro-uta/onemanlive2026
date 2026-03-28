@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta name="robots" content="noindex, nofollow">
+  
+  <title>ボクタチノオト ワンマンライブ</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Mochiy+Pop+P+One&family=Yusei+Magic&family=Kosugi+Maru&display=swap" rel="stylesheet">
+
+  <script crossorigin src="https://unpkg.com/react@18.2.0/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
+  
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { createRoot } = ReactDOM;
+
+    // --- アイコンの定義 (外部エラーを防ぐため直接埋め込み) ---
+    const Music = ({size=24, className="", fill="none", ...p}) => (<svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill={fill} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} {...p}><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>);
+    const Star = ({size=24, className="", fill="none", ...p}) => (<svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill={fill} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} {...p}><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>);
+    const Heart = ({size=24, className="", fill="none", ...p}) => (<svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill={fill} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} {...p}><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>);
+    const Camera = ({size=24, className="", fill="none", ...p}) => (<svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill={fill} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} {...p}><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>);
+    const Tv = ({size=24, className="", fill="none", ...p}) => (<svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill={fill} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} {...p}><rect width="20" height="15" x="2" y="7" rx="2" ry="2"/><polyline points="17 2 12 7 7 2"/></svg>);
+    const MapPin = ({size=24, className="", fill="none", ...p}) => (<svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill={fill} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} {...p}><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>);
+    const Smile = ({size=24, className="", fill="none", ...p}) => (<svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill={fill} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} {...p}><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" x2="9.01" y1="9" y2="9"/><line x1="15" x2="15.01" y1="9" y2="9"/></svg>);
+    const Youtube = ({size=24, className="", fill="none", ...p}) => (<svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill={fill} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} {...p}><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2.41 2.41 0 0 1 2.67-1.77 26.27 26.27 0 0 1 13.66 0 2.41 2.41 0 0 1 2.67 1.77 24.12 24.12 0 0 1 0 10 2.41 2.41 0 0 1-2.67 1.77 26.27 26.27 0 0 1-13.66 0 2.41 2.41 0 0 1-2.67-1.77Z"/><polygon points="10 15 15 12 10 9 10 15"/></svg>);
+    const Instagram = ({size=24, className="", fill="none", ...p}) => (<svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill={fill} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} {...p}><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>);
+    const MessageCircle = ({size=24, className="", fill="none", ...p}) => (<svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill={fill} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} {...p}><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>);
+    const Calendar = ({size=24, className="", fill="none", ...p}) => (<svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill={fill} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} {...p}><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>);
+    const Clock = ({size=24, className="", fill="none", ...p}) => (<svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill={fill} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} {...p}><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>);
+    const MapIcon = ({size=24, className="", fill="none", ...p}) => (<svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill={fill} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} {...p}><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" x2="9" y1="3" y2="18"/><line x1="15" x2="15" y1="6" y2="21"/></svg>);
+    const Navigation = ({size=24, className="", fill="none", ...p}) => (<svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill={fill} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} {...p}><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>);
+    const ClipboardList = ({size=24, className="", fill="none", ...p}) => (<svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill={fill} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} {...p}><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg>);
+
+    // --- データ定義 ---
+
+    const taroProfile = {
+      name: "湊太郎",
+      kana: "そうたろう",
+      image: "sotaro.jpg.JPG",
+      age: 10,
+      blood: "B型",
+      food: "パスタ、てりやきマックバーガー",
+      singer: "Mrs. GREEN APPLE、清水久美子（先生）",
+      subject: "理科、国語",
+      hobby: "全国各地にあるホテルの使い捨て「くし」集め",
+      good: "マイペース",
+      bad: "マイペース",
+      dream: "人を感動させられるアーティスト",
+      comment: "このライブは僕のアーティスト人生にとっての大きな一歩です。たくさんの人にきてもらえてとても光栄です！思いっきり楽しんでくださいね！"
+    };
+
+    const friendsProfile = [
+      { name: "心結", kana: "みゆう", image: "miyu.jpg.JPG", part: "🎹 ピアノ", blood: "B型（たぶん）", food: "焼肉", singer: "Mrs. GREEN APPLE", subject: "体育・英語", hobby: "運動すること", good: "苦手なことでも努力できるところ", bad: "マイペース", dream: "小学校の先生", comment: "みんなで楽しく盛り上がれるように演奏頑張ります🔥" },
+      { name: "倭都", kana: "やまと", image: "yamato.jpg.JPG", part: "🎹 ピアノ", blood: "O型（産まれた時）", food: "焼肉・お寿司", singer: "Mr.Children、Mrs. GREEN APPLE", subject: "理科", hobby: "ゲーム", good: "ピアノが好きで頑張るところ", bad: "今のところ見つかりません笑", dream: "プロのピアニスト", comment: "ピアノの先生が作ってくれた綺麗な伴奏なので、そうたろうの歌とともに楽しんで聴いてください！" },
+      { name: "日菜子", kana: "ひなこ", image: "hinako.jpg.JPG", part: "🎹 ピアノ", blood: "いろんな可能性をひめている", food: "アイス", singer: "Mrs. GREEN APPLE", subject: "図工", hobby: "ピアノ♪", good: "なんでもチャレンジ☆", bad: "早寝早起きが苦手", dream: "ピアニストになって、人の心を癒す演奏がしたい！", comment: "ライブで演奏させていただけて嬉しいです♪みんなと一緒に楽しみたいです！" },
+      { name: "泰希", kana: "たいき", image: "taiki.jpg.JPG", part: "🎹 ピアノ", blood: "いろんな可能性をひめている", food: "ぶどう", singer: "Eve", subject: "社会", hobby: "ゲーム", good: "自分の機嫌は自分でとるところ", bad: "マイペース", dream: "考え中", comment: "そうたろうをささえる伴奏ができるように頑張ります♪" },
+      { name: "芽美", kana: "めぐみ", image: "megumi.jpg.JPG", part: "💃 ダンス", blood: "O型", food: "手巻き寿司", singer: "sumika", subject: "体育", hobby: "ダンス", good: "みんなを楽しませること", bad: "ふざけること", dream: "ダンサーになること", comment: "3人で一緒にすることがないので、全力で楽しめるように頑張ります！こんな機会を作ってくれてありがとうございます！" },
+      { name: "梨咲子", kana: "りさこ", image: "risako.jpg.jpeg", part: "🎹 ピアノ", blood: "いろんな可能性をひめている", food: "お餅、餃子、麺類", singer: "HANA、ちゃんみな", subject: "理科、算数", hobby: "シール集め", good: "やると決めたら最後までやるきる努力家", bad: "負けず嫌いで熱くなりがち", dream: "お金持ち", comment: "誘ってくれてありがとう😆✨間違えないように頑張ります!!" }
+    ];
+
+    // ギャラリーの写真データ
+    const galleryData = [
+      { image: "1.jpg.jpeg" },
+      { image: "2.jpg.jpeg" },
+      { image: "3.jpg.jpeg" },
+      { image: "4.jpg.jpeg" },
+      { image: "5.jpg.jpeg" },
+      { image: "6.jpg.jpeg" },
+      { image: "7.jpg.jpeg" },
+      { image: "8.jpg.jpeg" },
+      { image: "9.jpg.jpeg" },
+      { image: "10.jpg.jpeg" },
+      { image: "11.jpg.jpeg" },
+      { image: "12.jpg.jpeg" },
+      { image: "13.jpg.jpeg" },
+      { image: "14.jpg.jpeg" },
+      { image: "15.jpg.jpeg" },
+      { image: "17.jpg.jpeg" },
+      { image: "18.jpg.jpeg" },
+      { image: "19.jpg.jpeg" },
+      { image: "16.jpg.jpeg" },
+      { image: "", title: "きせき 20" },
+      { image: "", title: "きせき 21" },
+      { image: "", title: "きせき 22" },
+      { image: "", title: "きせき 23" },
+      { image: "", title: "きせき 24" },
+      { image: "", title: "きせき 25" },
+      { image: "", title: "きせき 26" },
+      { image: "", title: "きせき 27" },
+      { image: "", title: "きせき 28" },
+      { image: "", title: "きせき 29" },
+      { image: "", title: "ライブ前日！" },
+    ];
+
+    const galleryColors = ['bg-pink-300', 'bg-blue-300', 'bg-green-300', 'bg-yellow-300', 'bg-purple-300', 'bg-orange-300'];
+    const galleryItems = galleryData.map((data, index) => ({
+      id: index + 1,
+      color: galleryColors[index % galleryColors.length],
+      image: data.image,
+      title: data.title
+    }));
+
+    // --- UIコンポーネント ---
+
+    const SectionTitle = ({ icon: Icon, title, color }) => (
+      <div className="flex items-center justify-center gap-2 sm:gap-3 mb-8">
+        <Icon className={`w-6 h-6 sm:w-8 sm:h-8 flex-shrink-0 ${color}`} fill="currentColor" />
+        <h2 className={`text-[4.2vw] sm:text-2xl font-black text-gray-800 tracking-wider whitespace-nowrap ${color.replace('text-', 'border-b-4 border-')}`}>
+          {title}
+        </h2>
+        <Icon className={`w-6 h-6 sm:w-8 sm:h-8 flex-shrink-0 ${color}`} fill="currentColor" />
+      </div>
+    );
+
+    const ProfileCard = ({ profile, isMain = false }) => {
+      if (!isMain) {
+        return (
+          <div className="bg-white rounded-2xl p-2.5 sm:p-4 shadow-md border-2 border-gray-100 flex flex-col h-full hover:shadow-lg transition-shadow">
+            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-1.5 sm:gap-3 mb-3 text-center sm:text-left">
+              <div className="w-10 h-10 sm:w-16 sm:h-16 rounded-full bg-blue-50 border-2 border-blue-200 flex items-center justify-center flex-shrink-0 text-blue-300 overflow-hidden relative">
+                <Smile className="w-6 h-6 sm:w-8 sm:h-8 absolute z-0" />
+                {profile.image && (
+                  <img 
+                    src={profile.image} 
+                    alt={profile.name} 
+                    className="w-full h-full object-cover absolute z-10 inset-0" 
+                  />
+                )}
+              </div>
+              <div>
+                <div className="text-[10px] sm:text-xs font-bold text-gray-400 mb-0.5">{profile.part}</div>
+                <h3 className="text-sm sm:text-xl font-black text-gray-800 tracking-widest flex items-baseline justify-center sm:justify-start gap-1">
+                  {profile.name} <span className="text-[10px] sm:text-sm text-cyan-600 font-bold tracking-normal">{profile.kana}</span>
+                </h3>
+              </div>
+            </div>
+            
+            <div className="space-y-1.5 sm:space-y-2 flex-grow">
+              <div className="grid grid-cols-2 gap-1.5 sm:gap-2">
+                <div className="bg-orange-50 p-1.5 sm:p-2 rounded-xl">
+                  <span className="font-bold text-orange-600 block text-[9px] sm:text-[10px] mb-0.5">🩸 血液型</span>
+                  <span className="text-gray-700 font-medium text-[9px] sm:text-xs">{profile.blood}</span>
+                </div>
+                <div className="bg-red-50 p-1.5 sm:p-2 rounded-xl">
+                  <span className="font-bold text-red-500 block text-[9px] sm:text-[10px] mb-0.5">🍔 好きな食べ物</span>
+                  <span className="text-gray-700 font-medium text-[9px] sm:text-xs">{profile.food}</span>
+                </div>
+                <div className="bg-cyan-50 p-1.5 sm:p-2 rounded-xl">
+                  <span className="font-bold text-cyan-600 block text-[9px] sm:text-[10px] mb-0.5">🎧 好きな歌手</span>
+                  <span className="text-gray-700 font-medium text-[9px] sm:text-xs truncate block">{profile.singer}</span>
+                </div>
+                <div className="bg-green-50 p-1.5 sm:p-2 rounded-xl">
+                  <span className="font-bold text-green-600 block text-[9px] sm:text-[10px] mb-0.5">🏫 好きな授業</span>
+                  <span className="text-gray-700 font-medium text-[9px] sm:text-xs">{profile.subject}</span>
+                </div>
+                <div className="bg-blue-50 p-1.5 sm:p-2 rounded-xl">
+                  <span className="font-bold text-blue-600 block text-[9px] sm:text-[10px] mb-0.5">🎮 趣味</span>
+                  <span className="text-gray-700 font-medium text-[9px] sm:text-xs">{profile.hobby}</span>
+                </div>
+                <div className="bg-pink-50 p-1.5 sm:p-2 rounded-xl">
+                  <span className="font-bold text-pink-600 block text-[9px] sm:text-[10px] mb-0.5">✨ 長所</span>
+                  <span className="text-gray-700 font-medium text-[9px] sm:text-xs">{profile.good}</span>
+                </div>
+                <div className="bg-purple-50 p-1.5 sm:p-2 rounded-xl">
+                  <span className="font-bold text-purple-600 block text-[9px] sm:text-[10px] mb-0.5">💦 短所</span>
+                  <span className="text-gray-700 font-medium text-[9px] sm:text-xs">{profile.bad}</span>
+                </div>
+                <div className="bg-yellow-50 p-1.5 sm:p-2 rounded-xl border border-yellow-100">
+                  <span className="font-bold text-yellow-600 block text-[9px] sm:text-[10px] mb-0.5">🚀 夢</span>
+                  <span className="text-gray-800 font-bold text-[9px] sm:text-xs">{profile.dream}</span>
+                </div>
+              </div>
+            </div>
+            
+            <div className="mt-2 sm:mt-3 p-2 sm:p-3 rounded-xl bg-gray-50 relative mt-auto">
+              <span className="font-bold text-gray-500 block text-[9px] sm:text-[10px] mb-0.5 sm:mb-1">💬 コメント</span>
+              <p className="font-bold text-gray-700 text-[10px] sm:text-xs leading-relaxed">
+                「{profile.comment}」
+              </p>
+            </div>
+          </div>
+        );
+      }
+
+      return (
+        <div className={`relative rounded-3xl p-6 sm:p-8 bg-white border-4 border-yellow-400 shadow-[8px_8px_0_#facc15]`}>
+          <div className="flex flex-col sm:flex-row gap-6 items-center sm:items-start mb-6">
+            <div className={`w-32 h-32 rounded-full flex items-center justify-center overflow-hidden border-4 border-yellow-400 flex-shrink-0 bg-yellow-100 relative`}>
+              <div className="w-full h-full flex items-center justify-center text-yellow-600 font-bold text-center p-2 text-sm absolute z-0">写真</div>
+              {profile.image && (
+                <img 
+                  src={profile.image} 
+                  alt={profile.name} 
+                  className="w-full h-full object-cover absolute z-10 inset-0 bg-yellow-100" 
+                />
+              )}
+            </div>
+            <div className="text-center sm:text-left w-full">
+              <div className="text-sm font-bold text-gray-400 mb-1">🎤 Vocal</div>
+              <h3 className="text-3xl font-black text-gray-800 mb-2 tracking-widest flex items-baseline justify-center sm:justify-start gap-2">
+                {profile.name} <span className="text-lg text-cyan-600 font-bold tracking-normal">{profile.kana}</span>
+              </h3>
+              <p className="inline-block bg-yellow-100 text-yellow-800 text-sm font-bold px-3 py-1 rounded-full">10歳</p>
+            </div>
+          </div>
+
+          <div className="space-y-4 text-sm sm:text-base">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+              <div className="bg-orange-50 p-3 rounded-2xl">
+                <span className="font-bold text-orange-600 block mb-1 text-xs">🩸 血液型</span>
+                <span className="text-gray-700 font-medium">{profile.blood}</span>
+              </div>
+              <div className="bg-red-50 p-3 rounded-2xl">
+                <span className="font-bold text-red-500 block mb-1 text-xs">🍔 好きな食べ物</span>
+                <span className="text-gray-700 font-medium">{profile.food}</span>
+              </div>
+              <div className="bg-cyan-50 p-3 rounded-2xl">
+                <span className="font-bold text-cyan-600 block mb-1 text-xs">🎧 好きな歌手</span>
+                <span className="text-gray-700 font-medium">{profile.singer}</span>
+              </div>
+              <div className="bg-green-50 p-3 rounded-2xl">
+                <span className="font-bold text-green-600 block mb-1 text-xs">🏫 好きな授業</span>
+                <span className="text-gray-700 font-medium">{profile.subject}</span>
+              </div>
+              <div className="bg-blue-50 p-3 rounded-2xl">
+                <span className="font-bold text-blue-600 block mb-1 text-xs">🎮 趣味</span>
+                <span className="text-gray-700 font-medium">{profile.hobby}</span>
+              </div>
+              <div className="bg-pink-50 p-3 rounded-2xl">
+                <span className="font-bold text-pink-600 block mb-1 text-xs">✨ 長所</span>
+                <span className="text-gray-700 font-medium">{profile.good}</span>
+              </div>
+              <div className="bg-purple-50 p-3 rounded-2xl">
+                <span className="font-bold text-purple-600 block mb-1 text-xs">💦 短所</span>
+                <span className="text-gray-700 font-medium">{profile.bad}</span>
+              </div>
+              <div className="bg-yellow-50 p-4 rounded-2xl border-2 border-yellow-100">
+                <span className="font-bold text-yellow-600 block mb-1 text-xs">🚀 夢</span>
+                <span className="text-gray-800 font-bold">{profile.dream}</span>
+              </div>
+            </div>
+            
+            <div className={`mt-4 p-4 rounded-2xl relative bg-gradient-to-r from-yellow-100 to-orange-100`}>
+              <div className="absolute -top-3 -left-2 text-3xl">💬</div>
+              <span className="font-bold text-gray-600 block mb-1 text-xs ml-4">コメント</span>
+              <p className={`font-bold leading-relaxed ml-2 text-gray-800 text-lg`}>
+                「{profile.comment}」
+              </p>
+            </div>
+          </div>
+        </div>
+      );
+    };
+
+    function App() {
+      return (
+        <div className="min-h-screen bg-gradient-to-b from-[#83cbfb] via-[#e5f4fd] to-[#f68eb3] bg-fixed font-sans selection:bg-yellow-300 relative" style={{ fontFamily: '"Kosugi Maru", "Hiragino Maru Gothic ProN", "VAG Rounded", sans-serif' }}>
+          
+          <style>
+            {`
+              @keyframes float {
+                0%, 100% { transform: translateY(0) rotate(0deg); }
+                50% { transform: translateY(-10px) rotate(5deg); }
+              }
+              .animate-float {
+                animation: float 4s ease-in-out infinite;
+              }
+            `}
+          </style>
+
+          <div className="w-full h-10 sm:h-16 flex border-b-4 border-gray-800 bg-white relative overflow-hidden z-20 max-w-5xl mx-auto rounded-b-2xl shadow-lg">
+            {Array.from({ length: 24 }).map((_, i) => (
+              <div key={i} className="flex-1 border-r border-gray-300 h-full relative">
+                {[1, 2, 4, 5, 6].includes(i % 7) && (
+                  <div className="absolute top-0 right-[-30%] w-[60%] h-[60%] bg-gray-800 z-10 rounded-b-sm border-x border-b border-gray-900 shadow-md"></div>
+                )}
+              </div>
+            ))}
+          </div>
+
+          <header className="pt-8 pb-8 px-4 text-center relative overflow-hidden z-10 bg-gradient-to-b from-[#64b5f6] via-white to-[#ff7eb3]">
+            <div className="absolute top-6 left-[10%] text-4xl sm:text-5xl text-yellow-300 transform -rotate-12 drop-shadow-sm animate-float">♪</div>
+            <div className="absolute top-2 left-[18%] text-3xl sm:text-4xl text-green-400 transform rotate-12 drop-shadow-sm animate-float" style={{animationDelay: '1s'}}>♫</div>
+            <div className="absolute top-8 right-[15%] text-4xl sm:text-5xl text-orange-400 transform rotate-12 drop-shadow-sm animate-float" style={{animationDelay: '0.5s'}}>♫</div>
+            <div className="absolute top-16 right-[8%] text-3xl sm:text-4xl text-yellow-400 transform -rotate-12 drop-shadow-sm animate-float" style={{animationDelay: '1.5s'}}>♪</div>
+            
+            {/* SOTARO ONE MAN LIVE - スマホではみ出ないように 5.5vw に縮小 */}
+            <div 
+              className="flex justify-center items-center font-black mb-2 text-[5.5vw] sm:text-4xl md:text-5xl tracking-normal whitespace-nowrap text-white" 
+              style={{ fontFamily: 'Impact, "Arial Narrow Bold", sans-serif', textShadow: '2px 2px 0px rgba(0,0,0,0.2)' }}
+            >
+              SOTARO ONE MAN LIVE
+            </div>
+            
+            {/* ボクタチノオト - スマホではみ出ないように 13vw に縮小 */}
+            <h1 
+              className="font-black mb-4 whitespace-nowrap text-[13vw] sm:text-8xl md:text-9xl"
+              style={{ 
+                fontFamily: '"Arial Black", "Hiragino Sans", "Hiragino Kaku Gothic ProN", sans-serif',
+                color: '#ff6b6b',
+                WebkitTextStroke: 'clamp(2px, 0.8vw, 4px) #e60000',
+                letterSpacing: '-0.02em'
+              }}
+            >
+              ボクタチノオト
+            </h1>
+            
+            {/* サブタイトル - スマホではみ出ないように 4vw に縮小 */}
+            <p 
+              className="font-black mb-12 whitespace-nowrap text-[4vw] sm:text-2xl md:text-3xl"
+              style={{
+                fontFamily: '"Mochiy Pop P One", "Yusei Magic", "Hiragino Maru Gothic ProN", sans-serif',
+                color: '#ffd700',
+                textShadow: '1px 1px 3px rgba(0,0,0,0.2)'
+              }}
+            >
+              〜「ありがとう」と「みらい」へのステージ〜
+            </p>
+
+            <div className="mt-8 mb-10 flex flex-col items-center gap-4">
+              {/* 日付 - スマホではみ出ないように全体を 8vw、(SUN)を 5vw に縮小 */}
+              <h2 
+                className="text-[8vw] sm:text-7xl md:text-8xl font-black text-[#222] whitespace-nowrap leading-none"
+                style={{ 
+                  fontFamily: '"Arial Black", sans-serif',
+                  textShadow: '-3px 3px 0 #00f0ff, 3px -3px 0 #ff1493',
+                  letterSpacing: '0.02em'
+                }}
+              >
+                2026/4/19 <span className="text-[5vw] sm:text-5xl md:text-6xl">(SUN)</span>
+              </h2>
+              {/* 時間 - スマホではみ出ないように 7vw に縮小 */}
+              <div 
+                className="text-[7vw] sm:text-5xl md:text-6xl font-black text-[#222] whitespace-nowrap leading-none mt-2"
+                style={{ 
+                  fontFamily: '"Arial Black", sans-serif',
+                  textShadow: '-3px 3px 0 #00f0ff, 3px -3px 0 #ff1493',
+                  letterSpacing: '0.05em'
+                }}
+              >
+                START 14:00 -
+              </div>
+            </div>
+
+            <p className="text-gray-700 font-bold text-sm sm:text-lg drop-shadow-sm bg-white/70 inline-block px-6 py-3 sm:px-8 sm:py-4 rounded-3xl border border-white mt-4 leading-relaxed">
+              本日はありがとうございます！！！<br/>
+              開演まで、このサイトをみてワクワクしてね！
+            </p>
+          </header>
+
+          <main className="max-w-4xl mx-auto px-4 pb-20 space-y-24 relative z-10">
+
+            <section id="about" className="mt-16 scroll-mt-24">
+              <SectionTitle icon={Star} title="ライブのじょうほう" color="text-yellow-400" />
+              <div className="bg-white rounded-3xl p-6 sm:p-10 shadow-lg border-2 border-dashed border-yellow-300 text-center">
+                <h3 className="text-xl font-bold text-gray-700 mb-6">今日だけのスペシャルステージ！</h3>
+                <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-12 mb-8">
+                  <div className="flex items-center justify-center gap-2 text-lg font-bold text-gray-600">
+                    <Calendar className="text-pink-500" /> 今日！
+                  </div>
+                  <div className="flex items-center justify-center gap-2 text-lg font-bold text-gray-600">
+                    <Clock className="text-blue-500" /> まもなく開演！
+                  </div>
+                </div>
+                <div className="bg-yellow-50 p-6 rounded-2xl inline-block max-w-lg w-full">
+                  <p className="font-bold text-gray-700 mb-2">🎵 どんな曲をやるかは…</p>
+                  <p className="text-2xl font-black text-yellow-600">はじまってからのおたのしみ！</p>
+                </div>
+              </div>
+            </section>
+
+            <section id="profile" className="scroll-mt-24">
+              <SectionTitle icon={Smile} title="湊太郎のプロフィール" color="text-pink-400" />
+              <div className="max-w-2xl mx-auto">
+                <ProfileCard profile={taroProfile} isMain={true} />
+              </div>
+            </section>
+
+            <section className="scroll-mt-24">
+              <SectionTitle icon={Music} title="いっしょに演奏するおともだち" color="text-blue-400" />
+              <p className="text-center text-gray-600 font-bold mb-8">湊太郎をサポートしてくれる最強のメンバーだよ！</p>
+              <div className="grid grid-cols-2 gap-2 sm:gap-6">
+                {friendsProfile.map((friend, index) => (
+                  <ProfileCard key={index} profile={friend} />
+                ))}
+                
+                <div className="col-span-2 flex justify-center mt-2 sm:mt-4">
+                  <div className="bg-white rounded-2xl p-4 sm:p-6 shadow-md border-2 border-dashed border-purple-200 flex flex-col items-center justify-center w-full max-w-sm hover:shadow-lg transition-shadow text-center">
+                    <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-purple-50 border-4 border-purple-200 flex items-center justify-center mb-4 text-purple-300 overflow-hidden">
+                      {/* ★結那さんの写真がある場合は、srcの中身を "./yuina.jpg" のように書き換えてください */}
+                      <img src="yuina.jpg.JPG" alt="結那" className="w-full h-full object-cover" />
+                    </div>
+                    <div>
+                      <div className="text-xs sm:text-sm font-bold text-gray-400 mb-1 leading-tight">
+                        🎙️ ナレーション
+                      </div>
+                      <h3 className="text-lg sm:text-2xl font-black text-gray-800 tracking-widest flex items-baseline justify-center gap-1 mt-2">
+                        結那 <span className="text-[10px] sm:text-sm text-cyan-600 font-bold tracking-normal">ゆいな</span>
+                      </h3>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            {/* 4. ワンマンライブまでの軌跡（ギャラリー） */}
+            <section id="history" className="scroll-mt-24">
+              <SectionTitle icon={Camera} title="ライブまでのきせき" color="text-green-400" />
+              <p className="text-center text-gray-600 font-bold mb-8">今日のために、みんないっぱい練習したよ！</p>
+              
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 sm:gap-4">
+                {galleryItems.map((item) => (
+                  <div key={item.id} className="group relative aspect-square rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow cursor-pointer bg-white p-2">
+                    <div className={`w-full h-full rounded-xl ${item.image ? 'bg-gray-100' : item.color} flex items-center justify-center text-center transition-transform group-hover:scale-105 overflow-hidden relative`}>
+                      <span className="text-white font-bold text-sm drop-shadow-md mix-blend-luminosity opacity-80 p-2 absolute z-0">
+                        [写真 {item.id}]
+                      </span>
+                      {item.image && (
+                        <img 
+                          src={item.image} 
+                          alt={item.title} 
+                          className="w-full h-full object-cover absolute z-10 inset-0" 
+                        />
+                      )}
+                    </div>
+                    <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center rounded-2xl">
+                      <span className="text-white font-bold text-sm px-2 text-center">{item.title}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            <section id="sns" className="scroll-mt-24">
+              <SectionTitle icon={Tv} title="おうちでも楽しめる！＆ SNS" color="text-purple-400" />
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="space-y-6">
+                  <div className="bg-white rounded-3xl p-6 shadow-md border-2 border-purple-100">
+                    <div className="flex items-center gap-3 mb-4 text-purple-600 font-bold text-lg">
+                      <Youtube size={24} /> ライブ配信・アーカイブ
+                    </div>
+                    <p className="text-gray-600 text-sm font-medium mb-4 leading-relaxed">
+                      今日のライブの様子は、アーカイブでも見れます♪<br/>
+                      もう一度見たい人も、来られなかったお友だちもチェックしてね！<br/>
+                      <span className="inline-block mt-2 font-bold text-purple-700 bg-purple-50 px-3 py-1 rounded-lg">（配信チケット：別途1,100円）</span>
+                    </p>
+                    <a 
+                      href="https://premier.twitcasting.tv/c:secondrooms/shopcart/418602" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="w-full bg-purple-100 hover:bg-purple-200 text-purple-700 font-bold py-3 px-4 rounded-xl transition-colors flex items-center justify-center gap-2"
+                    >
+                      配信チケット・視聴はこちら <Navigation size={16} />
+                    </a>
+                  </div>
+
+                  <div className="bg-white rounded-3xl p-6 shadow-md border-2 border-pink-100">
+                    <div className="flex items-center gap-3 mb-4 text-pink-600 font-bold text-lg">
+                      <Heart size={24} /> 公式SNS
+                    </div>
+                    <div className="space-y-3">
+                      <a 
+                        href="https://www.instagram.com/sotaro_uta_0223?igsh=dmV4ZjFwNDUwYmk5&utm_source=qr" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-between p-3 rounded-xl bg-pink-50 hover:bg-pink-100 transition-colors text-pink-700 font-bold"
+                      >
+                        <span className="flex items-center gap-2"><Instagram size={20} /> Instagram</span>
+                        <span className="text-xs">最新曲や合唱曲等をアップ中！</span>
+                      </a>
+                      <a 
+                        href="https://youtube.com/channel/UCX6aXoQaGdm_dcCeUpt9-uw?si=vTq3qRGlSi8U5F3T" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-between p-3 rounded-xl bg-red-50 hover:bg-red-100 transition-colors text-red-700 font-bold"
+                      >
+                        <span className="flex items-center gap-2"><Youtube size={20} /> YouTube</span>
+                        <span className="text-xs">今後長尺動画をアップ予定🎵</span>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-gradient-to-br from-[#06C755] to-[#05a345] rounded-3xl p-1 shadow-[0_8px_0_#048036] transform transition-transform hover:-translate-y-1">
+                  <div className="bg-white rounded-[22px] h-full p-6 sm:p-8 flex flex-col justify-between">
+                    <div>
+                      <div className="inline-flex items-center gap-2 bg-[#06C755] text-white font-black px-4 py-1 rounded-full text-sm mb-4">
+                        <MessageCircle size={16} fill="currentColor" /> LINE公式アカウント
+                      </div>
+                      <h3 className="text-2xl font-black text-gray-800 mb-4 leading-snug">
+                        お友だち追加で<br/>
+                        <span className="text-yellow-500">湊太郎オリジナルソング</span><br/>
+                        をゲットしよう！🎁
+                      </h3>
+                      <div className="bg-green-50 p-4 rounded-2xl mb-6">
+                        <ol className="list-decimal list-inside space-y-2 text-sm font-bold text-gray-700 mb-3">
+                          <li>下のボタンからLINEをお友だち追加</li>
+                          <li>トーク画面で<span className="text-green-600 bg-white px-1 rounded">好きなスタンプ</span>を1つ送る！</li>
+                        </ol>
+                        <p className="text-sm font-bold text-pink-600 bg-pink-50 p-2 rounded-xl text-center">
+                          後日、湊太郎のオリジナルソングデータをお届けします！🎧
+                        </p>
+                      </div>
+                    </div>
+                    <a 
+                      href="https://lin.ee/w2lpv4C" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="block w-full text-center bg-[#06C755] hover:bg-[#05b34c] text-white font-black py-4 px-6 rounded-2xl shadow-md transition-colors text-lg"
+                    >
+                      お友だち追加する！
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            {/* 6. アンケート */}
+            <section id="survey" className="scroll-mt-24">
+              <SectionTitle icon={ClipboardList} title="アンケートのおねがい" color="text-teal-500" />
+              <div className="bg-white rounded-3xl p-6 sm:p-10 shadow-lg border-2 border-dashed border-teal-300 text-center">
+                <div className="bg-teal-50 p-6 sm:p-8 rounded-2xl inline-block max-w-2xl w-full">
+                  <h3 className="text-xl sm:text-2xl font-black text-teal-800 mb-5 leading-snug">
+                    ライブ終了後にアンケートの<br className="sm:hidden" />ご協力をお願いいたします。
+                  </h3>
+                  <p className="text-xs sm:text-sm font-bold text-red-600 bg-white px-4 py-3 rounded-xl inline-block shadow-sm mb-6 border border-red-100">
+                    ※集合写真等のSNS掲載についても<br className="sm:hidden" />回答をお願いします
+                  </p>
+                  <div>
+                    <a 
+                      href="https://docs.google.com/forms/d/e/1FAIpQLSesczb_S3jIT6EkTfFdZ5d7iKOuhkm07Rmh5xUdX0auSC47FA/viewform?usp=header" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="inline-block w-full sm:w-auto bg-teal-500 hover:bg-teal-600 text-white font-black py-4 px-10 rounded-full shadow-md transition-transform hover:scale-105 text-lg"
+                    >
+                      アンケートに答える
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            {/* 7. ライブハウス紹介 */}
+            <section>
+              <SectionTitle icon={MapPin} title="今日のステージ" color="text-red-400" />
+              <div className="bg-white rounded-3xl overflow-hidden shadow-lg border-2 border-gray-100">
+                <div className="bg-gray-800 p-8 text-center relative">
+                  <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-yellow-300 via-transparent to-transparent"></div>
+                  <h3 className="text-3xl font-black text-white mb-2 relative z-10 tracking-widest">Second Rooms</h3>
+                  <p className="text-gray-300 text-sm font-medium relative z-10">Kyoto Muko-shi</p>
+                </div>
+                <div className="p-6 sm:p-8">
+                  <p className="text-gray-700 font-medium mb-6 text-center leading-relaxed">
+                    今日、湊太郎たちが最高の音楽を届けるステージです。<br/>
+                    おいしいドリンクを飲みながら、ゆっくり楽しんでね！
+                  </p>
+                  <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a 
+                      href="https://www.ilfmusic.com/secondrooms.html" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold py-3 px-6 rounded-xl transition-colors"
+                    >
+                      <MapIcon size={18} /> ライブハウスのウェブサイトへ
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+          </main>
+
+          <div className="w-full h-10 sm:h-16 flex border-t-4 border-b-4 border-gray-800 bg-white relative overflow-hidden z-10 max-w-5xl mx-auto rounded-t-2xl shadow-lg mt-8">
+            {Array.from({ length: 24 }).map((_, i) => (
+              <div key={i} className="flex-1 border-r border-gray-300 h-full relative">
+                {[1, 2, 4, 5, 6].includes(i % 7) && (
+                  <div className="absolute top-0 right-[-30%] w-[60%] h-[60%] bg-gray-800 z-10 rounded-b-sm border-x border-b border-gray-900 shadow-md"></div>
+                )}
+              </div>
+            ))}
+          </div>
+
+          <footer className="bg-yellow-400 py-8 text-center text-yellow-900 relative z-10">
+            <div className="flex justify-center mb-4">
+              <Star className="text-yellow-200 animate-spin-slow" size={32} fill="currentColor" />
+            </div>
+            <p className="font-bold text-lg mb-2">まもなく開演です！</p>
+            <p className="text-sm font-medium opacity-80">
+              PRODUCE：Y＆Y
+            </p>
+          </footer>
+        </div>
+      );
+    }
+
+    const root = createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+</html>
