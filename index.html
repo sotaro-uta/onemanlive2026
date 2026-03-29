@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
   
   <meta name="robots" content="noindex, nofollow">
   
@@ -48,6 +49,7 @@
       name: "湊太郎",
       kana: "そうたろう",
       image: "sotaro.jpg.JPG",
+      part: "🎤 Vocal", // 追加：メインカードでもパートが表示されるようにしました
       age: 10,
       blood: "B型",
       food: "パスタ、てりやきマックバーガー",
@@ -90,7 +92,7 @@
       { image: "18.jpg.jpeg" },
       { image: "19.jpg.jpeg" },
       { image: "16.jpg.jpeg" },
-      { image: "", title: "きせき 20" },
+      { image: "20.jpg.jpeg" },
       { image: "", title: "きせき 21" },
       { image: "", title: "きせき 22" },
       { image: "", title: "きせき 23" },
@@ -102,6 +104,7 @@
       { image: "", title: "きせき 29" },
       { image: "", title: "ライブ前日！" },
     ];
+
 
     const galleryColors = ['bg-pink-300', 'bg-blue-300', 'bg-green-300', 'bg-yellow-300', 'bg-purple-300', 'bg-orange-300'];
     const galleryItems = galleryData.map((data, index) => ({
@@ -124,6 +127,7 @@
     );
 
     const ProfileCard = ({ profile, isMain = false }) => {
+      // isMainがfalseの場合（使わなくなりますが、念のため残しています）
       if (!isMain) {
         return (
           <div className="bg-white rounded-2xl p-2.5 sm:p-4 shadow-md border-2 border-gray-100 flex flex-col h-full hover:shadow-lg transition-shadow">
@@ -193,8 +197,9 @@
         );
       }
 
+      // 大きいカードデザイン（おともだちもこのデザインを使用します）
       return (
-        <div className={`relative rounded-3xl p-6 sm:p-8 bg-white border-4 border-yellow-400 shadow-[8px_8px_0_#facc15]`}>
+        <div className={`relative rounded-3xl p-6 sm:p-8 bg-white border-4 border-yellow-400 shadow-[8px_8px_0_#facc15] hover:translate-y-[-2px] transition-transform`}>
           <div className="flex flex-col sm:flex-row gap-6 items-center sm:items-start mb-6">
             <div className={`w-32 h-32 rounded-full flex items-center justify-center overflow-hidden border-4 border-yellow-400 flex-shrink-0 bg-yellow-100 relative`}>
               <div className="w-full h-full flex items-center justify-center text-yellow-600 font-bold text-center p-2 text-sm absolute z-0">写真</div>
@@ -207,11 +212,13 @@
               )}
             </div>
             <div className="text-center sm:text-left w-full">
-              <div className="text-sm font-bold text-gray-400 mb-1">🎤 Vocal</div>
+              <div className="text-sm font-bold text-gray-400 mb-1">{profile.part || "🎤 Vocal"}</div>
               <h3 className="text-3xl font-black text-gray-800 mb-2 tracking-widest flex items-baseline justify-center sm:justify-start gap-2">
                 {profile.name} <span className="text-lg text-cyan-600 font-bold tracking-normal">{profile.kana}</span>
               </h3>
-              <p className="inline-block bg-yellow-100 text-yellow-800 text-sm font-bold px-3 py-1 rounded-full">10歳</p>
+              {profile.age && (
+                <p className="inline-block bg-yellow-100 text-yellow-800 text-sm font-bold px-3 py-1 rounded-full">{profile.age}歳</p>
+              )}
             </div>
           </div>
 
@@ -263,6 +270,8 @@
       );
     };
 
+    // --- メインアプリケーション ---
+
     function App() {
       return (
         <div className="min-h-screen bg-gradient-to-b from-[#83cbfb] via-[#e5f4fd] to-[#f68eb3] bg-fixed font-sans selection:bg-yellow-300 relative" style={{ fontFamily: '"Kosugi Maru", "Hiragino Maru Gothic ProN", "VAG Rounded", sans-serif' }}>
@@ -295,7 +304,6 @@
             <div className="absolute top-8 right-[15%] text-4xl sm:text-5xl text-orange-400 transform rotate-12 drop-shadow-sm animate-float" style={{animationDelay: '0.5s'}}>♫</div>
             <div className="absolute top-16 right-[8%] text-3xl sm:text-4xl text-yellow-400 transform -rotate-12 drop-shadow-sm animate-float" style={{animationDelay: '1.5s'}}>♪</div>
             
-            {/* SOTARO ONE MAN LIVE - スマホではみ出ないように 5.5vw に縮小 */}
             <div 
               className="flex justify-center items-center font-black mb-2 text-[5.5vw] sm:text-4xl md:text-5xl tracking-normal whitespace-nowrap text-white" 
               style={{ fontFamily: 'Impact, "Arial Narrow Bold", sans-serif', textShadow: '2px 2px 0px rgba(0,0,0,0.2)' }}
@@ -303,7 +311,6 @@
               SOTARO ONE MAN LIVE
             </div>
             
-            {/* ボクタチノオト - スマホではみ出ないように 13vw に縮小 */}
             <h1 
               className="font-black mb-4 whitespace-nowrap text-[13vw] sm:text-8xl md:text-9xl"
               style={{ 
@@ -316,7 +323,6 @@
               ボクタチノオト
             </h1>
             
-            {/* サブタイトル - スマホではみ出ないように 4vw に縮小 */}
             <p 
               className="font-black mb-12 whitespace-nowrap text-[4vw] sm:text-2xl md:text-3xl"
               style={{
@@ -329,7 +335,6 @@
             </p>
 
             <div className="mt-8 mb-10 flex flex-col items-center gap-4">
-              {/* 日付 - スマホではみ出ないように全体を 8vw、(SUN)を 5vw に縮小 */}
               <h2 
                 className="text-[8vw] sm:text-7xl md:text-8xl font-black text-[#222] whitespace-nowrap leading-none"
                 style={{ 
@@ -340,7 +345,6 @@
               >
                 2026/4/19 <span className="text-[5vw] sm:text-5xl md:text-6xl">(SUN)</span>
               </h2>
-              {/* 時間 - スマホではみ出ないように 7vw に縮小 */}
               <div 
                 className="text-[7vw] sm:text-5xl md:text-6xl font-black text-[#222] whitespace-nowrap leading-none mt-2"
                 style={{ 
@@ -390,23 +394,25 @@
             <section className="scroll-mt-24">
               <SectionTitle icon={Music} title="いっしょに演奏するおともだち" color="text-blue-400" />
               <p className="text-center text-gray-600 font-bold mb-8">湊太郎をサポートしてくれる最強のメンバーだよ！</p>
-              <div className="grid grid-cols-2 gap-2 sm:gap-6">
+              
+              {/* おともだちのカードも大きなカードで1列に並ぶように変更しました */}
+              <div className="flex flex-col gap-8 max-w-2xl mx-auto">
                 {friendsProfile.map((friend, index) => (
-                  <ProfileCard key={index} profile={friend} />
+                  <ProfileCard key={index} profile={friend} isMain={true} />
                 ))}
                 
-                <div className="col-span-2 flex justify-center mt-2 sm:mt-4">
-                  <div className="bg-white rounded-2xl p-4 sm:p-6 shadow-md border-2 border-dashed border-purple-200 flex flex-col items-center justify-center w-full max-w-sm hover:shadow-lg transition-shadow text-center">
-                    <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-purple-50 border-4 border-purple-200 flex items-center justify-center mb-4 text-purple-300 overflow-hidden">
-                      {/* ★結那さんの写真がある場合は、srcの中身を "./yuina.jpg" のように書き換えてください */}
-                      <img src="yuina.jpg.JPG" alt="結那" className="w-full h-full object-cover" />
+                {/* ナレーション枠も大きなデザインに合わせて整えました */}
+                <div className="flex justify-center mt-4">
+                  <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-md border-4 border-dashed border-purple-300 flex flex-col sm:flex-row items-center sm:items-start gap-6 w-full hover:shadow-lg transition-shadow text-center sm:text-left">
+                    <div className="w-32 h-32 rounded-full bg-purple-50 border-4 border-purple-300 flex items-center justify-center flex-shrink-0 text-purple-300 overflow-hidden relative">
+                      <img src="yuina.jpg.JPG" alt="結那" className="w-full h-full object-cover absolute z-10 inset-0" />
                     </div>
-                    <div>
-                      <div className="text-xs sm:text-sm font-bold text-gray-400 mb-1 leading-tight">
+                    <div className="flex flex-col justify-center h-full w-full">
+                      <div className="text-sm font-bold text-gray-400 mb-1 leading-tight">
                         🎙️ ナレーション
                       </div>
-                      <h3 className="text-lg sm:text-2xl font-black text-gray-800 tracking-widest flex items-baseline justify-center gap-1 mt-2">
-                        結那 <span className="text-[10px] sm:text-sm text-cyan-600 font-bold tracking-normal">ゆいな</span>
+                      <h3 className="text-3xl font-black text-gray-800 tracking-widest flex items-baseline justify-center sm:justify-start gap-2 mt-1">
+                        結那 <span className="text-lg text-cyan-600 font-bold tracking-normal">ゆいな</span>
                       </h3>
                     </div>
                   </div>
@@ -414,7 +420,6 @@
               </div>
             </section>
 
-            {/* 4. ワンマンライブまでの軌跡（ギャラリー） */}
             <section id="history" className="scroll-mt-24">
               <SectionTitle icon={Camera} title="ライブまでのきせき" color="text-green-400" />
               <p className="text-center text-gray-600 font-bold mb-8">今日のために、みんないっぱい練習したよ！</p>
@@ -527,7 +532,6 @@
               </div>
             </section>
 
-            {/* 6. アンケート */}
             <section id="survey" className="scroll-mt-24">
               <SectionTitle icon={ClipboardList} title="アンケートのおねがい" color="text-teal-500" />
               <div className="bg-white rounded-3xl p-6 sm:p-10 shadow-lg border-2 border-dashed border-teal-300 text-center">
@@ -552,7 +556,6 @@
               </div>
             </section>
 
-            {/* 7. ライブハウス紹介 */}
             <section>
               <SectionTitle icon={MapPin} title="今日のステージ" color="text-red-400" />
               <div className="bg-white rounded-3xl overflow-hidden shadow-lg border-2 border-gray-100">
